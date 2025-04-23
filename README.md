@@ -1,17 +1,17 @@
-# Bluetti2MQTT
+# Bluetti2MQTT-jesherman fork
 
-![update-badge](https://img.shields.io/github/last-commit/SSMCD/bluetti2mqtt?label=Last%20Updated)
+This is a fork of Bluetti2MQTT which hacks together a few fixes based on prior people's own fixes so that it works as of April 2025:
 
-## Installation
-To add this repository to Home Assistant use the badge below:
+- Support for encryption (thanks @nhurman!) and newer devices (e.g. AC180)
+- Tweaks to fix nhurman's version of bluetti_mqtt to support the last version of asyncio_mqtt which handles filtered_messages (14.0) and adds some pip dependencies (e.g. cryptography and specific supported versions of other stuff)
+- Updated python images for this addon to fix build support in GitHub
+- Overall this WORKS but is very hacky! I make no warranty/guarantee but I have successfully tested it on Raspberry Pi5 running HAOS. This entire add-on probably needs a rewrite to support all the various changes that have been made to its dependencies. 
 
-[![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2FSSMCD%2Fbluetti2mqtt)
 
-or add it manually by navigating to `Settings` > `Add-ons` > `Add-on Store`
-
-Select the three dot menu in the upper right, choose `Repositories`, and add the following url:
 ```
-https://github.com/SSMCD/bluetti2mqtt
+Add this URL to your Home Assistant Repository:
+
+https://github.com/jesherman/bluetti2mqtt
 ```
 
 Refresh the page (hard refresh may be required), scroll down to Bluetti2MQTT and install the add-on.
