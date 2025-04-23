@@ -5,22 +5,23 @@ FROM $BUILD_FROM
 COPY rootfs /
 
 # Install git dependencies for pip
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
-    build-base \
+    build-essential \
     python3-dev \
-    musl-dev \
     libffi-dev \
-    openssl-dev \
-    cargo
+    libssl-dev \
+    cargo \
+    bluez \
     
 # Install bluetti_mqtt
 RUN pip install git+https://github.com/nhurman/bluetti_mqtt
 RUN pip install pyasn1
 RUN pip install cryptography 
 RUN apk add --update --no-cache \
-	bluez=5.65-r0 \
-	&& rm -rf /var/cache/apk/* /lib/apk/db/* \
-	&& chmod a+x /run.sh
+	 && apt-get clean \
+	 && rm -rf /var/lib/apt/lists/*
+
+	RUN chmod a+x /run.sh
 
 CMD [ "/run.sh" ]
