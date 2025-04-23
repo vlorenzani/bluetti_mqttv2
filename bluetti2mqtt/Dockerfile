@@ -4,6 +4,16 @@ FROM $BUILD_FROM
 # Copy data for add-on new 1
 COPY rootfs /
 
+# Install git dependencies for pip
+RUN apk add --no-cache \
+    git \
+    build-base \
+    python3-dev \
+    musl-dev \
+    libffi-dev \
+    openssl-dev \
+    cargo
+    
 # Install bluetti_mqtt
 RUN pip install git+https://github.com/nhurman/bluetti_mqtt
 RUN pip install pyasn1
