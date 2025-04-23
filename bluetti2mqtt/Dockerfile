@@ -19,6 +19,7 @@ RUN apk add --no-cache \
 
 # Install bluetti_mqtt and other pip packages
 RUN pip install git+https://github.com/nhurman/bluetti_mqtt
+RUN pip install aiomqtt
 RUN pip install pyasn1
 RUN pip install cryptography 
 
