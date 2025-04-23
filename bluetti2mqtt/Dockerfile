@@ -4,7 +4,7 @@ FROM $BUILD_FROM
 # Copy data for add-on new 1
 COPY rootfs /
 
-# Install git dependencies for pip
+# Install system dependencies using apt-get and clean up in the same layer
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     build-essential \
@@ -12,16 +12,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libffi-dev \
     libssl-dev \
     cargo \
-    bluez
-    
-# Install bluetti_mqtt
+    bluez \
+ # Clean up apt cache to keep image smaller
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
+# Install bluetti_mqtt and other pip packages
 RUN pip install git+https://github.com/nhurman/bluetti_mqtt
 RUN pip install pyasn1
 RUN pip install cryptography 
-RUN apk add --update --no-cache \
-	 && apt-get clean \
-	 && rm -rf /var/lib/apt/lists/*
 
-	RUN chmod a+x /run.sh
+# Set permissions for run script (Corrected indentation)
+RUN chmod a+x /run.sh
 
 CMD [ "/run.sh" ]
