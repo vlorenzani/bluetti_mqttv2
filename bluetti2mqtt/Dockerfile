@@ -5,11 +5,11 @@ FROM $BUILD_FROM
 COPY rootfs /
 
 # Install bluetti_mqtt
-RUN pip install git+https://github.com/nhurman/bluetti_mqtt \
-	&& pip install pyasn1 \
- 	&& pip install cryptography \
-	&& apk add --update --no-cache \
-		bluez=5.65-r0 \
+RUN pip install git+https://github.com/nhurman/bluetti_mqtt
+RUN pip install pyasn1
+RUN pip install cryptography 
+RUN apk add --update --no-cache \
+	bluez=5.65-r0 \
 	&& rm -rf /var/cache/apk/* /lib/apk/db/* \
 	&& chmod a+x /run.sh
 
