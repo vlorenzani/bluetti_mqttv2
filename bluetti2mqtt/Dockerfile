@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libffi-dev \
     libssl-dev \
     cargo \
-    bluez \
+    bluez
     
 # Install bluetti_mqtt
 RUN pip install git+https://github.com/nhurman/bluetti_mqtt
