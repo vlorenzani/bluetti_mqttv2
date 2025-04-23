@@ -1,7 +1,7 @@
 ARG BUILD_FROM
 FROM $BUILD_FROM
 
-# Copy data for add-on new
+# Copy data for add-on new 1
 COPY rootfs /
 
 # Install bluetti_mqtt
