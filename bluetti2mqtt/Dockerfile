@@ -4,25 +4,28 @@ FROM $BUILD_FROM
 # Copy data for add-on new 1
 COPY rootfs /
 
-# Install system dependencies using apt-get and clean up in the same layer
-RUN apt-get update && apt-get install -y --no-install-recommends \
+# Install system dependencies using apk (Alpine package manager)
+# Note: build-base is the Alpine equivalent of build-essential
+# Note: openssl-dev is the Alpine equivalent of libssl-dev
+# Note: Removing bluez version pin initially - add back if needed and available
+RUN apk add --no-cache \
     git \
-    build-essential \
+    build-base \
     python3-dev \
     libffi-dev \
-    libssl-dev \
+    openssl-dev \
     cargo \
-    bluez \
- # Clean up apt cache to keep image smaller
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+    bluez
 
 # Install bluetti_mqtt and other pip packages
 RUN pip install git+https://github.com/nhurman/bluetti_mqtt
 RUN pip install pyasn1
 RUN pip install cryptography 
 
-# Set permissions for run script (Corrected indentation)
+# Set permissions for run script
 RUN chmod a+x /run.sh
+
+# Optional: Clean apk cache if needed, though --no-cache minimizes it
+# RUN rm -rf /var/cache/apk/*
 
 CMD [ "/run.sh" ]
