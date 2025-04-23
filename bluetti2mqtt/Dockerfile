@@ -26,6 +26,8 @@ RUN pip install cryptography
 # Set permissions for run script
 RUN chmod a+x /run.sh
 
+RUN sed -i 's/sys.exit(main())/sys.exit(main(sys.argv))/' /usr/bin/bluetti-mqtt
+
 # Optional: Clean apk cache if needed, though --no-cache minimizes it
 # RUN rm -rf /var/cache/apk/*
 
