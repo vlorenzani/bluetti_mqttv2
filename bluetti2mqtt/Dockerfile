@@ -8,18 +8,33 @@ COPY rootfs /
 # Note: build-base is the Alpine equivalent of build-essential
 # Note: openssl-dev is the Alpine equivalent of libssl-dev
 # Note: Removing bluez version pin initially - add back if needed and available
+RUN apk add --no-cache --force-overwrite \
+    openssl=3.5.2-r0 \
+    openssl-dev=3.5.2-r0 \
+    libcrypto3=3.5.2-r0 \
+    libssl3=3.5.2-r0
+
 RUN apk add --no-cache \
     git \
     build-base \
     python3-dev \
     libffi-dev \
-    openssl-dev \
     cargo \
     bluez
 
-# Install bluetti_mqtt and other pip packages
-RUN pip install asyncio-mqtt==0.14.0 paho-mqtt==1.6.1
-RUN pip install git+https://github.com/jesherman/bluetti_mqtt
+# Install pip dependencies FIRST with explicit versions
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir \
+	aiomqtt==2.1.0 \
+        bleak==0.22.3 \
+        crcmod==1.7 \
+        cryptography==44.0.0 \
+        dbus-next==0.2.3 \
+        pyasn1==0.6.1 \
+        pyserial==3.5 \
+        prometheus_client==0.20.0
+
+RUN pip install --no-cache-dir --no-deps git+https://github.com/vlorenzani/bluetti_mqtt.git@v2devices
 
 # Set permissions for run script
 RUN chmod a+x /run.sh
